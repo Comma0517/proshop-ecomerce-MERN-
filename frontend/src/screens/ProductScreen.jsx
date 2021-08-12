@@ -1,71 +1,77 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   Row,
   Col,
   Image,
   ListGroup,
+  ListGroupItem,
   Card,
   Button,
-  Form,
-  ListGroupItem,
 } from "react-bootstrap";
+
 import Rating from "../components/Rating";
+
 import products from "../products";
 
-const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
+const ProductScreen = () => {
+  const { id } = useParams();
+  const product = products.find((p) => p._id === id);
 
   return (
     <>
-      <NavLink className="btn btn-light my-3 " to="/">
+      <Link className="btn btn-light my-3 " to="/">
         Go Back
-      </NavLink>
+      </Link>
       <Row>
         <Col md={6}>
           <Image src={product.image} alt={product.name} fluid></Image>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
-            <ListGroup.Item>
+            <ListGroupItem>
               <h3>{product.name}</h3>
-            </ListGroup.Item>
+            </ListGroupItem>
 
-            <ListGroup.Item>
+            <ListGroupItem>
               <Rating
                 value={product.rating}
                 text={`${product.numReviews} reviews`}
               />
-            </ListGroup.Item>
+            </ListGroupItem>
 
-            <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+            <ListGroupItem>Price: ${product.price}</ListGroupItem>
 
-            <ListGroup.Item>Description: {product.description}</ListGroup.Item>
+            <ListGroupItem>Description: {product.description}</ListGroupItem>
           </ListGroup>
         </Col>
         <Col md={3}>
           <Card>
             <ListGroup variant="flush">
-              <ListGroup.Item>
+              <ListGroupItem>
                 <Row>
                   <Col>Price:</Col>
                   <strong>{product.price}</strong>
                 </Row>
-              </ListGroup.Item>
+              </ListGroupItem>
 
-              <ListGroup.Item>
+              <ListGroupItem>
                 <Row>
                   <Col>Status:</Col>
                   <Col>
                     {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                   </Col>
                 </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Button className="btn-block" type="button">
+              </ListGroupItem>
+              <ListGroupItem>
+                <Button
+                  className="btn-block"
+                  type="button"
+                  disabled={product.countInStock === 0}
+                >
                   Add to Cart
                 </Button>
-              </ListGroup.Item>
+              </ListGroupItem>
             </ListGroup>
           </Card>
         </Col>
