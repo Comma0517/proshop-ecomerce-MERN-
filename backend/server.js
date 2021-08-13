@@ -1,10 +1,13 @@
 import express from "express";
 import { config } from "dotenv";
 import products from "./data/products.js";
+import cors from "cors";
 
 config();
 
 const app = express();
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("API is running...");

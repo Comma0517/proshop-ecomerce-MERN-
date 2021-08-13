@@ -14,16 +14,18 @@ import Rating from "../components/Rating";
 
 const ProductScreen = ({ match }) => {
   const [product, setProduct] = useState({});
-
+  const { id } = useParams();
   useEffect(() => {
     const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/products/${encodeURIComponent(id)}`
+      );
 
       setProduct(data);
     };
 
     fetchProduct();
-  }, []);
+  }, [id]);
 
   return (
     <>

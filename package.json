@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/itxSaaad/proshop-ecomerce-app-mern#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },
