@@ -12,20 +12,18 @@ import {
 import axios from "axios";
 import Rating from "../components/Rating";
 
-const ProductScreen = () => {
+const ProductScreen = ({ match }) => {
   const [product, setProduct] = useState({});
-  const { id } = useParams();
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const { data } = await axios.get(
-        `/api/products/${encodeURIComponent(id)}`
-      );
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+
       setProduct(data);
     };
 
     fetchProduct();
-  }, [id]);
+  }, []);
 
   return (
     <>
