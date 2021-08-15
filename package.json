@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/itxSaaad/proshop-ecomerce-app-mern#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
