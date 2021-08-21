@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -26,6 +26,7 @@ const ProductScreen = ({ match }) => {
   const { loading, error, product } = productDetails;
   const { id } = useParams();
   const history = useNavigate();
+
   useEffect(() => {
     dispatch(listProductDetails(`${encodeURIComponent(id)}`));
   }, [dispatch, match]);
