@@ -85,6 +85,7 @@ const ProductScreen = ({ match }) => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <Row>
