@@ -6,13 +6,13 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-} from "../constants/productConstants";
+} from "../constants/productConstants.js";
 
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get("https://localhost:5000/api/products");
+    const { data } = await axios.get("http://localhost:5000/api/products");
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -34,7 +34,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `https://localhost:5000/api/products/${encodeURIComponent(id)}`
+      `http://localhost:5000/api/products/${encodeURIComponent(id)}`
     );
 
     dispatch({

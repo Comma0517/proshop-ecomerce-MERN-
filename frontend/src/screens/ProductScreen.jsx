@@ -15,9 +15,9 @@ import Rating from "../components/Rating";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
-import { listProductDetails } from "../actions/productActions";
+import { listProductDetails } from "../actions/productActions.js";
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = () => {
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const ProductScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(listProductDetails(`${encodeURIComponent(id)}`));
-  }, [dispatch, match]);
+  }, [dispatch]);
 
   const addToCartHandler = () => {
     history(`/cart/${encodeURIComponent(id)}?qty=${qty}`);
