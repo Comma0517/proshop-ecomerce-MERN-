@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import colors from "colors";
+import bodyParser from "body-parser";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
@@ -23,6 +24,12 @@ app.use("/api/products", productRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 
