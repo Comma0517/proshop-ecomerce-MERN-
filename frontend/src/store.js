@@ -5,9 +5,11 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+
+// reducers
 import {
-  productListReducer,
   productDetailsReducer,
+  productListReducer,
 } from "./reducers/productReducers.js";
 import { cartReducer } from "./reducers/cartReducers.js";
 
@@ -22,9 +24,10 @@ const cartItemsFromStorage = localStorage.getItem("cartItems")
   : [];
 
 const initialState = {
-  cart: { cartItems: cartItemsFromStorage },
+  cart: {
+    cartItems: cartItemsFromStorage,
+  },
 };
-
 const middleware = [thunk];
 
 const store = createStore(
