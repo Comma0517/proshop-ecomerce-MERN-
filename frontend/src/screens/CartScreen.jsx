@@ -16,10 +16,10 @@ import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = () => {
-  const { id } = useParams();
-  const productId = `${id}`;
   const location = useLocation();
   const history = useNavigate();
+
+  const productId = useParams();
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   console.log("cartItems:", cartItems);
@@ -49,7 +49,7 @@ const CartScreen = () => {
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
-            Your Cart is Empty <Link to={"/"}>Go Back</Link>
+            Your cart is empty <Link to="/">Go Back</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
@@ -95,7 +95,7 @@ const CartScreen = () => {
           </ListGroup>
         )}
       </Col>
-      <Col md={2}>
+      <Col md={4}>
         <Card>
           <ListGroup variant="flush">
             <ListGroup.Item>

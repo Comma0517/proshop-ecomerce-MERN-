@@ -1,12 +1,6 @@
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants.js";
 
-const initialState = {
-  cartItems: [],
-  shippingAddress: {},
-  paymentMethod: null,
-};
-
-export const cartReducer = (state = { cartItems: initialState }, action) => {
+export const cartReducer = (state = { cartItems: [] }, action) => {
   switch (action.type) {
     case CART_ADD_ITEM: {
       const item = action.payload;

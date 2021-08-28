@@ -18,21 +18,24 @@ import Loader from "../components/Loader";
 import { listProductDetails } from "../actions/productActions.js";
 
 const ProductScreen = () => {
-  const [qty, setQty] = useState(1);
-
+  const { productId } = useParams();
   const dispatch = useDispatch();
-
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
-  const { id } = useParams();
   const history = useNavigate();
 
+  const productDetails = useSelector((state) => state.productDetails);
+
+  const { loading, error, product } = productDetails;
+
   useEffect(() => {
-    dispatch(listProductDetails(`${encodeURIComponent(id)}`));
-  }, [dispatch]);
+    dispatch(listProductDetails(productId));
+  }, [dispatch, productId]);
+
+  const [qty, setQty] = useState(1);
 
   const addToCartHandler = () => {
-    history(`/cart/${encodeURIComponent(id)}?qty=${qty}`);
+    history(`/cart/${productId}?qty=${qty}`, {
+      replace: true,
+    });
   };
   return (
     <>
@@ -76,7 +79,6 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
@@ -85,7 +87,6 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <Row>
@@ -106,7 +107,6 @@ const ProductScreen = () => {
                     </Row>
                   </ListGroup.Item>
                 )}
-
                 <ListGroup.Item>
                   <Button
                     onClick={addToCartHandler}
