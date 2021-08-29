@@ -16,15 +16,13 @@ import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = () => {
-  const location = useLocation();
+  const { id } = useParams();
+  const productId = `${encodeURIComponent(id)}`;
+  const dispatch = useDispatch();
   const history = useNavigate();
-
-  const productId = useParams();
+  const location = useLocation();
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
-  console.log("cartItems:", cartItems);
-
-  const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
