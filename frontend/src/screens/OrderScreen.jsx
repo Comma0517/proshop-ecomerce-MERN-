@@ -15,6 +15,7 @@ const OrderScreen = () => {
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+
   if (!loading) {
     //   Calculate prices
     const addDecimals = (num) => {
@@ -27,7 +28,7 @@ const OrderScreen = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-  }, [orderId]);
+  }, [dispatch, orderId]);
 
   return loading ? (
     <Loader />
@@ -57,6 +58,11 @@ const OrderScreen = () => {
                 {order.shippingAddress.postalCode},{" "}
                 {order.shippingAddress.country}
               </p>
+              {order.isDelivered ? (
+                <Message variant="success">Delivered on {order.At}</Message>
+              ) : (
+                <Message variant="danger">Not Delivered</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
