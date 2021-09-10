@@ -9,31 +9,27 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
-} from "../constants/orderConstants";
+} from "../constants/orderConstants.js";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
     });
-
     const {
       userLogin: { userInfo },
     } = getState();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
     const { data } = await axios.post(
       `http://localhost:5000/api/orders`,
       order,
       config
     );
-
     dispatch({
       type: ORDER_CREATE_SUCCESS,
       payload: data,
@@ -53,22 +49,18 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
     });
-
     const {
       userLogin: { userInfo },
     } = getState();
-
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
     const { data } = await axios.get(
       `http://localhost:5000/api/orders/${id}`,
       config
     );
-
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
       payload: data,
@@ -83,6 +75,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
+
 export const payOrder =
   (orderId, paymentResult) => async (dispatch, getState) => {
     try {
@@ -96,7 +89,7 @@ export const payOrder =
 
       const config = {
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
