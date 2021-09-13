@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import AsyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import { Error } from "mongoose";
 
 const protect = AsyncHandler(async (req, res, next) => {
   let token;
@@ -29,5 +30,13 @@ const protect = AsyncHandler(async (req, res, next) => {
     throw new Error("Not Authorized, No Token!");
   }
 });
+const admin = AsyncHandler(async (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not Authorized as Admin");
+  }
+});
 
-export { protect };
+export { protect, admin };
