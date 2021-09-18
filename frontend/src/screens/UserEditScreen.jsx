@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserDetails } from "../actions/userActions.js";
+import { getUserDetails, updateUser } from "../actions/userActions.js";
+import { USER_UPDATE_RESET } from "../constants/userConstants.js";
 
 import FormContainer from "../components/FormContainer.jsx";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
 const userEditScreen = () => {
-  const location = useLocation();
   const history = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -23,18 +23,31 @@ const userEditScreen = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   useEffect(() => {
-    if (!user.name || user._id !== userId) {
-      dispatch(getUserDetails(userId));
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
+      history("/admin/userlist");
     } else {
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
+      if (!user.name || user._id !== userId) {
+        dispatch(getUserDetails(userId));
+      } else {
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
+      }
     }
-  }, [userId, user, dispatch]);
+  }, [userId, user, successUpdate, dispatch, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUser({ _id: userId, name, email, isAdmin }));
   };
 
   return (
@@ -44,6 +57,8 @@ const userEditScreen = () => {
       </Link>{" "}
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
