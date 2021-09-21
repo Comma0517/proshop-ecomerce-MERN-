@@ -4,7 +4,12 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { listProducts, deleteProduct } from "../actions/productActions.js";
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from "../actions/productActions.js";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants.js";
 
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -23,20 +28,39 @@ const ProductListScreen = () => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    if (!userInfo.isAdmin) {
       history("/login");
     }
-  }, [dispatch, history, successDelete, userInfo]);
+    if (successCreate) {
+      history(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    successDelete,
+    successCreate,
+    createdProduct,
+    userInfo,
+  ]);
 
-  const createProductHandler = (product) => {
+  const createProductHandler = () => {
     if (window.confirm("Are You Sure?")) {
-      console.log("Created");
+      dispatch(createProduct());
     }
   };
   const deleteProductsHandler = (id) => {
@@ -56,6 +80,8 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
