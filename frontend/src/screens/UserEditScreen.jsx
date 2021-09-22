@@ -85,7 +85,7 @@ const userEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="iAdmin">
+            <Form.Group controlId="isadmin">
               <Form.Check
                 type="checkbox"
                 label="Is Admin"
