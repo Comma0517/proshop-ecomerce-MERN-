@@ -17,6 +17,7 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 
@@ -43,6 +44,7 @@ const App = () => {
               path="/admin/product/:id/edit"
               element={<ProductEditScreen />}
             />
+            <Route path="/admin/orderlist" element={<OrderListScreen />} />
 
             <Route path="/" element={<HomeScreen />} exact />
           </Routes>

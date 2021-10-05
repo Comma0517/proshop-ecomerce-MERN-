@@ -70,6 +70,7 @@ const ProductEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
+
       const { data } = await axios.post(
         "http://localhost:5000/api/upload",
         formData,
@@ -143,12 +144,12 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.Control
+              <Form.File
                 id="image-file"
-                type="file"
                 label="Choose File"
+                custom
                 onChange={uploadFileHandler}
-              ></Form.Control>
+              ></Form.File>
               {uploading && <Loader />}
             </Form.Group>
 
