@@ -13,9 +13,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 import path from "path";
 
 dotenv.config();
-
 connectDB();
-
 const app = express();
 
 if (process.env.NODE_ENV === "development") {
@@ -48,6 +46,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(notFound);
 app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 app.listen(
   PORT,
