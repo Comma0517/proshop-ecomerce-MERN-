@@ -7,7 +7,7 @@ import "./index.css";
 import axios from "axios";
 import App from "./App";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://proshop-ecomerce-app-mern.vercel.app";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
